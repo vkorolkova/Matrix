@@ -3,15 +3,15 @@ using namespace std;
 
 class Fraction {
 private:
-	int numerator; // числитель
-	int denominator; // знаменатель
+	int numerator; 
+	int denominator; 
 public:
-	// конструктор по умолчанию
+	
 	Fraction() {
 		numerator = 0;
 		denominator = 1;
 	}
-	// конструктор с параметрами
+	
 	Fraction(int n, int d) {
 		numerator = n;
 		denominator = d;
@@ -24,7 +24,7 @@ public:
 
 	~Fraction() {}
 
-	// сокращение дроби
+	
 	Fraction Cancellation(Fraction &a)
 	{
 		if (a.numerator != 0)
@@ -34,8 +34,7 @@ public:
 			}
 			int n = a.numerator,
 				m = a.denominator;
-			// вычисление НОД(числитель, знаменатель)
-			// алгоритмом Евклида
+			
 			while (n != m) {
 				if (n > m) {
 					n -= m;
@@ -69,7 +68,7 @@ public:
 		return *this;
 	}
 
-	// операции сравнения двух дробей
+	
 	bool operator == (const Fraction a) {
 		if (numerator * a.denominator != denominator * a.numerator)
 			return false;
@@ -133,7 +132,7 @@ public:
 	}
 
 	friend ostream& operator << (ostream& out, Fraction& a) {
-		// знаменатель печатается, если числитель не равен 0
+		// Г§Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј ГЇГҐГ·Г ГІГ ГҐГІГ±Гї, ГҐГ±Г«ГЁ Г·ГЁГ±Г«ГЁГІГҐГ«Гј Г­ГҐ Г°Г ГўГҐГ­ 0
 		if (a.numerator == 0) {
 			out << "0";
 		}
@@ -150,7 +149,6 @@ public:
 		return out;
 	}
 
-	// операция ввода рациональной дроби
 	friend istream& operator >> (istream& fin, Fraction& a) {
 		char buf = ' ';
 		fin >> a.numerator;
@@ -377,13 +375,12 @@ public:
 		}
 		Fraction *x, *y, max, mod;
 		int k, index;
-		Fraction eps = 1 / 100000;  // точность
+		Fraction eps = 1 / 100000;  
 		y = new Fraction[n];
 		x = new Fraction[n];
 		k = 0;
 		while (k < n)
 		{
-			// Поиск строки с максимальным a[i][k]
 			max = mod.mod(temp.ar[k][k]);
 			index = k;
 			for (int i = k + 1; i < n; i++) {
@@ -392,9 +389,9 @@ public:
 					index = i;
 				}
 			}
-			// Перестановка строк
+			
 			if (max < eps) {
-				// нет ненулевых диагональных элементов
+				
 				cout << "Solution can not be obtained due to a null column ";
 				cout << index << " Matrix A" << endl;
 				exit(1);
@@ -407,21 +404,20 @@ public:
 			Fraction tem = y[k];
 			y[k] = y[index];
 			y[index] = tem;
-			// Нормализация уравнений
+			
 			for (int i = k; i < n; i++) {
 				Fraction tem = temp.ar[i][k];
-				if (mod.mod(tem) < eps) continue; // для нулевого коэффициента пропустить
+				if (mod.mod(tem) < eps) continue;
 				for (int j = 0; j < n; j++)
 					temp.ar[i][j] = temp.ar[i][j] / tem;
 				y[i] = y[i] / tem;
-				if (i == k)  continue; // уравнение не вычитать само из себя
+				if (i == k)  continue; 
 				for (int j = 0; j < n; j++)
 					temp.ar[i][j] = temp.ar[i][j] - temp.ar[k][j];
 				y[i] = y[i] - y[k];
 			}
 			k++;
 		}
-		// обратная подстановка
 		for (k = n - 1; k >= 0; k--) {
 			x[k] = y[k];
 			for (int i = 0; i < k; i++) {
@@ -449,34 +445,6 @@ public:
 	}
 };
 
-
-/*int main()
-{
-	int n, m;
-	cout << "Enter the size of matrix (the number of rows and columns): ";
-	cin >> n >> m;
-	Matrix matrix1(n, m);
-	cout << "Enter the elements of the matrix: ";
-	cin >> matrix1;
-	cout << "Matrix:" << endl << matrix1 << endl;
-	matrix1.Gauss();
-	cin.get(); cin.get();
-	return 0;
-}*/
-
-/*int main()
-{
-	Fraction r1, r2;
-	cout << "Enter two fractions: " << endl;
-	cin >> r1 >> r2;
-	cout << "Fractions: " << r1 << ' ' << r2 << endl;
-	cout << "+ " << r1 + r2 << endl;
-	cout << "- " << r1 - r2 << endl;
-	cout << "* " << r1 * r2 << endl;
-	cout << "/ " << r1 / r2 << endl;
-	cin.get(); cin.get();
-	return 0;
-}*/
 
 int main()
 {
